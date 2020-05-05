@@ -1,0 +1,2 @@
+# LPP 
+A c++ implementation of a toy interpreted language inspired by  [lox](https://github.com/munificent/craftinginterpreters) from [Crafting interpreters](http://craftinginterpreters.com/) book by  Bob Nystrom. More precisely, lpp is inspired by clox from charptter III "A byte code virtual machine". This code is written as an excercisse while following the book. LPP is not an implementation of lox and does not have the same features as lox. This project is a work in progress and in it's current state lpp does not support classes & instances.
