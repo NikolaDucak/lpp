@@ -41,14 +41,15 @@ namespace lpp{
 			currentChunk = func.chunk;
 			ip = currentChunk->code.begin();
 
+			currentStackStart = functionStackStart;
 		}
-		currentStackStart = functionStackStart;
 	}
 
 	void VirtualMachine::returnFromCall(Value returnValue){
 		ip = callStack.top().returnIp;
 		currentChunk = callStack.top().returnChunk;
 		valueStack.clearFrom( callStack.top().stackStart - 1 ); // minus 1 for identifier;
+
 		// valueStack.clearFrom( localValueStackStart ); // minus 1 for identifier;
 		/*
 		 * currentStackStart = callStack.top().oldStackStartIndex;
@@ -178,7 +179,7 @@ namespace lpp{
 				// ---------------- Variable ops -----------------
 				case OP_DECL_GLOB: {
 					auto id = getID();
-					globals[id] = valueStack.top();
+					globals[id] = valueStack.pop();
 				} break;
 
 				case OP_GLOBAL_GET: {
@@ -195,13 +196,13 @@ namespace lpp{
 					auto id = getID();
 					// localStackStart[id] = valueStack.top();
 					valueStack.push( valueStack.fromStart( currentStackStart + id ) );
-				}break;
+				} break;
 				
 				case OP_LOCAL_SET:{
 					auto id = getID();
 					// localStackStart[id] = valueStack.top();
 					valueStack.fromStart( currentStackStart + id ) = valueStack.top();
-				}break;
+				} break;
 
 				default: /*unreachable*/ break;
 			}

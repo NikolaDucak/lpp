@@ -91,9 +91,10 @@ namespace lpp{
 	 * --------------------------------------------------------------------------------------*/
 
 	int Compiler::resolveLocal(Identifier id){
-		for(int i = 0; i < int(locals.size()); i++){
-			if (locals[i].id == id)
-				return i;
+		// size_t is unsigned so if i go to i>=0 then next i-- makes it a huge positive number & segfaults
+		for(size_t i = locals.size(); i > 0; i--){
+			if (locals[i-1].id == id)
+				return i-1;
 		}
 		return -1;
 	}
